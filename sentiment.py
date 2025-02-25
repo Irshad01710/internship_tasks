@@ -3,9 +3,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 from textblob import TextBlob
 
-# Load Dataset
 df = pd.read_csv('amazon.csv')
-
 # Function to get sentiment
 def get_sentiment(text):
     analysis = TextBlob(str(text))
@@ -16,15 +14,12 @@ def get_sentiment(text):
     else:
         return 'Neutral'
 
-# Applying sentiment function
 df['Sentiment'] = df['reviewText'].apply(get_sentiment)
 
 # Count and percentage of each sentiment
 sentiment_counts = df['Sentiment'].value_counts()
 total_reviews = len(df)
 sentiment_percentages = (sentiment_counts / total_reviews) * 100
-
-# Define colors for each sentiment
 color_palette = {'Positive': 'green', 'Negative': 'red', 'Neutral': 'blue'}
 
 # Plot sentiment distribution
@@ -32,7 +27,6 @@ plt.figure(figsize=(8, 6))
 ax = sns.countplot(x='Sentiment', data=df, palette=color_palette)
 plt.title('Sentiment Distribution')
 
-# Annotate bars with counts and percentages
 for p in ax.patches:
     count = int(p.get_height())
     percentage = (count / total_reviews) * 100
@@ -40,7 +34,5 @@ for p in ax.patches:
                 ha='center', va='bottom', fontsize=12, fontweight='bold', color='black')
 
 plt.show()
-
-# Display table with review text and corresponding sentiment
 display(df[['reviewText', 'Sentiment']])
 
