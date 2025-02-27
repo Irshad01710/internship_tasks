@@ -15,6 +15,7 @@ def get_sentiment(text):
         return 'Neutral'
 
 df['Sentiment'] = df['reviewText'].apply(get_sentiment)
+display(df[['reviewText', 'Sentiment']])
 
 # Count and percentage of each sentiment
 sentiment_counts = df['Sentiment'].value_counts()
@@ -34,5 +35,4 @@ for p in ax.patches:
                 ha='center', va='bottom', fontsize=12, fontweight='bold', color='black')
 
 plt.show()
-display(df[['reviewText', 'Sentiment']])
 
