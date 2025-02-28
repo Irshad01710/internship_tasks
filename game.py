@@ -1,56 +1,42 @@
-import time
+import pygame
+import random
 
-# Set the length of the track
-track_length = 20  
-# Initialize the player's position
-player_position = 0  
-# Initialize the NPC's position
-npc_position = 0  
-# Set a fixed speed for the NPC
-npc_speed = 3  
+pygame.init()
 
-print("Welcome to the Simple Racing Game!")
+WIDTH, HEIGHT = 800, 600
+WHITE = (255, 255, 255)
+PLAYER_COLOR, NPC_COLOR = (0, 0, 255), (255, 0, 0)
 
-# Start the game loop
-while player_position < track_length and npc_position < track_length:
-    # Ask the player to choose their acceleration speed
-    action = input("Do you want to accelerate? (y/n): ")
-    
-    if action.lower() == 'y':
-        # Ask the player to enter their speed (1 to 5)
-        player_speed = int(input("Enter your speed (1-5): "))
-        
-        # Validate the input speed
-        if player_speed < 1 or player_speed > 5:
-            print("Invalid speed! Please enter a number between 1 and 5.")
-            continue  # Skip the rest of the loop and ask again
-        
-        # Update the player's position
-        player_position += player_speed  
-        print("You accelerate to position", player_position)
-    else:
-        print("You chose not to accelerate.")
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Two Player Racing Game")
 
-    # Move the NPC
-    npc_position += npc_speed  # NPC moves at a fixed speed
-    print("The NPC moves to position", npc_position)
+player_x, player_y = WIDTH // 3, HEIGHT - 150
+npc_x, npc_y = 2 * WIDTH // 3, HEIGHT - 150
+player_speed, npc_speed = 5, random.uniform(2, 4)
 
-    # Pause for a moment to simulate time passing
-    time.sleep(1)  
+running = True
+while running:
+    pygame.time.delay(30)
+    screen.fill(WHITE)
 
-    # Check if the player or NPC has reached the finish line
-    if player_position >= track_length and npc_position >= track_length:
-        print("It's a tie!")
-        break
-    elif player_position >= track_length:
-        print("Congratulations! You reached the finish line first!")
-        break
-    elif npc_position >= track_length:
-        print("The NPC reached the finish line first! Better luck next time.")
-        break
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
 
-    # Show the current positions
-    print("Current Positions: Player:", player_position, "NPC:", npc_position)
+    keys = pygame.key.get_pressed()
+    player_y -= player_speed if keys[pygame.K_UP] else 0
+    player_y += player_speed if keys[pygame.K_DOWN] else 0
 
-# End of the game
-print("Thanks for playing!")
+    npc_y -= npc_speed
+    if npc_y < 0:
+        npc_y, npc_speed = HEIGHT - 100, random.uniform(2, 4)
+
+    if player_y < 50 or npc_y < 50:
+        print("Player wins!" if player_y < 50 else "NPC wins!")
+        running = False
+
+    pygame.draw.rect(screen, PLAYER_COLOR, (player_x, player_y, 50, 70))
+    pygame.draw.rect(screen, NPC_COLOR, (npc_x, npc_y, 50, 70))
+    pygame.display.update()
+
+pygame.quit()
