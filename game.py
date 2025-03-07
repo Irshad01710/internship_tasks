@@ -4,20 +4,25 @@ import random
 pygame.init()
 
 WIDTH, HEIGHT = 800, 600
-WHITE = (255, 255, 255)
+WHITE, BLACK, YELLOW = (255, 255, 255), (0, 0, 0), (255, 255, 0)
 PLAYER_COLOR, NPC_COLOR = (0, 0, 255), (255, 0, 0)
 
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
-pygame.display.set_caption("Two Player Racing Game")
+pygame.display.set_caption("Racing Game")
 
-player_x, player_y = WIDTH // 3, HEIGHT - 150
-npc_x, npc_y = 2 * WIDTH // 3, HEIGHT - 150
+player_x, player_y = WIDTH // 3 - 25, HEIGHT - 150
+npc_x, npc_y = 2 * WIDTH // 3 - 25, HEIGHT - 150
 player_speed, npc_speed = 5, random.uniform(2, 4)
 
 running = True
 while running:
     pygame.time.delay(30)
     screen.fill(WHITE)
+
+    # Draw road
+    pygame.draw.rect(screen, BLACK, (WIDTH // 4, 0, WIDTH // 2, HEIGHT))
+    for i in range(0, HEIGHT, 40):
+        pygame.draw.rect(screen, YELLOW, (WIDTH // 2 - 5, i, 10, 20))
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -40,3 +45,4 @@ while running:
     pygame.display.update()
 
 pygame.quit()
+
