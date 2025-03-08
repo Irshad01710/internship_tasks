@@ -12,7 +12,7 @@ pygame.display.set_caption("Racing Game")
 
 player_x, player_y = WIDTH // 3 - 25, HEIGHT - 150
 npc_x, npc_y = 2 * WIDTH // 3 - 25, HEIGHT - 150
-player_speed, npc_speed = 5, random.uniform(2, 4)
+player_speed, npc_speed = 5, random.uniform(2, 5)
 
 running = True
 while running:
