@@ -2,11 +2,9 @@ from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
 from datetime import datetime
 
-# Initialize chatbot
 chatbot = ChatBot("AppointmentBot")
 trainer = ListTrainer(chatbot)
 
-# Training chatbot with basic responses
 trainer.train([
     "Hello", "Hello! I can help you schedule an appointment or answer common questions. What would you like to do?",
     "Hi", "Hello! I can help you schedule an appointment or answer common questions. What would you like to do?",
@@ -17,7 +15,6 @@ trainer.train([
     "Support", "You can contact us at supportme@gmail.com or call +1 234 567 890."
 ])
 
-# Store appointments
 appointments = {}
 
 def schedule_appointment():
